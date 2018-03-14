@@ -12,6 +12,7 @@ import { NotificationsService } from 'angular2-notifications';
 export class RegistrationComponent implements OnInit {
   userForm: FormGroup;
   errors = null;
+  isSending = false;
   constructor(private fb: FormBuilder, private auth: AuthService, private router: Router, private notification: NotificationsService) {}
 
   ngOnInit() {
@@ -28,7 +29,9 @@ export class RegistrationComponent implements OnInit {
   get password() { return this.userForm.get('password'); }
 
   registration() {
+    this.isSending = true;
     this.auth.registerUser(this.userForm.value).subscribe((response) => {
+      this.isSending = false;
       if (response.errors) {
         this.errors = response.errors;
         console.log(response.errors);
