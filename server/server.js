@@ -5,6 +5,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var routes = require('./lib/routes');
 var mongoose = require('mongoose');
+var expressValidator = require('express-validator');
 
 
 mongoose.Promise = global.Promise;
@@ -15,9 +16,17 @@ mongoose.connect(config.mongodb, (err)=>{
     }
     console.log('Connected to mongodb: '+config.mongodb);
 
+    app.use(express.static(path.resolve(__dirname+'/../dist')));
+
     app.use(bodyParser.urlencoded({ extended: false}));
     app.use(bodyParser.json());
-    app.use(express.static(path.resolve(__dirname+'/../dist')));
+    app.use(expressValidator({
+        errorFormatter: (param, msg, value, location) => {
+            return msg;
+        }
+    }));
+
+
 
     app.use(routes);
     app.get('*', (req,res)=>{
