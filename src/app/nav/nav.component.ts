@@ -1,3 +1,4 @@
+import { AuthService } from './../auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +7,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-
-  constructor() { }
+  user: any;
+  constructor(private auth: AuthService) { }
 
   ngOnInit() {
+    this.checkUser();
+    this.auth.userStatusUpdated.subscribe(() => {
+      this.checkUser();
+    } );
   }
 
+  checkUser() {
+    if (this.auth.isAuth()) {
+      this.user = 1;
+    } else {
+      this.user = null;
+    }
+  }
+  logout() {
+    this.auth.logout();
+  }
 }

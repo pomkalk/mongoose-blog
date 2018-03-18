@@ -1,9 +1,13 @@
-<div class="ui borderless stackeble menu">
+<div class="ui borderless stackable menu">
   <div class="header link item" routerLink="/">
     <i class="desktop icon"></i>
     Mongoose Blog Demo
   </div>
-  <div class="right menu">
+  <div *ngIf="user" class="link item">
+    <i class="green circle plus icon"></i>
+    Add post
+  </div>
+  <div *ngIf="!user" class="right menu">
     <div class="link item" routerLink="/login" routerLinkActive="active">
       <i class="circle outline icon"></i>
       Login
@@ -13,4 +17,10 @@
       Register
     </div>
   </div>
+  <div *ngIf="user" class="right menu">
+      <div class="link item" (click)="logout()">
+        <i class="circle outline icon"></i>
+        Log out
+      </div>
+    </div>  
 </div>

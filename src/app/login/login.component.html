@@ -1,3 +1,26 @@
-<p>
-  login works!
-</p>
+<div class="ui basic segment">
+  <div class="ui dividing header">
+    Login
+  </div>
+  <div class="ui form error" [formGroup]="loginForm">
+    <div class="required field" [class.error]="errors&&errors.email">
+      <label>Email</label>
+      <input type="email" placeholder="Email" formControlName="email">
+    </div>
+    <div class="field">
+      <div class="required field" [class.error]="errors&&errors.password">
+        <label>Password</label>
+        <input type="password" formControlName="password">
+    </div>
+    </div>
+    <div class="ui error message" *ngIf="errors">
+      <div class="header">Error</div>
+      <ul class="list">
+        <li *ngFor="let field of errors | keys">{{ field }}: {{ errors[field] }}
+      </ul>
+    </div>
+    <div class="ui right aligned basic segment">
+      <div class="ui green button" (click)="login()">Login</div>
+    </div>
+  </div>
+</div>
